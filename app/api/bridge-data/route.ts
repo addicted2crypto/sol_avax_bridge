@@ -182,7 +182,7 @@ let lastFetchTime = 0;
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes cache
 
 export async function GET() {
-  const currentTime = Date.now();
+  const currentTime = Date.now(); // Add round to nearest hour here
 
   if (!cachedData || currentTime - lastFetchTime > CACHE_DURATION) {
     try {
