@@ -1,11 +1,9 @@
-import SolanaAvaxSwapTracker from './solona-avax-swap-tracker';
-
+import AvaxInflowTracker from "./avax-infow-tracker";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <SolanaAvaxSwapTracker />
+    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
+      <AvaxInflowTracker />
     </main>
-  )
+  );
 }
-
