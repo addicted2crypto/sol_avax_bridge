@@ -193,7 +193,7 @@ export async function GET() {
     } catch (error) {
       console.error("Error in GET route:", error);
       return NextResponse.json(
-        { error: "Failed to fetch bridge data" },
+        { error: "Failed to fetch bridged data" },
         { status: 500 }
       );
     }
