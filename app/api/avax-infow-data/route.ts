@@ -4,9 +4,9 @@ import { roundToNearestHour } from "../utils/time";
 interface InflowDataItem {
   time: string;
   exchangeAmount: number;
-  bridgeAmount: number;
-  exchangeUsdValue: number;
-  bridgeUsdValue: number;
+  totalInflow: number;
+  solBridgeAmount: number;
+  ethBridgeAmount: number;
 }
 
 type InflowData = {
@@ -25,7 +25,7 @@ async function fetchBitfinexPrice() {
 }
 
 async function fetchExchangeData() {
-  // Add api data fetching logic here
+  
   return {
     binance: Math.random() * 1000,
     coinbase: Math.random() * 800,
@@ -94,23 +94,29 @@ async function fetchRealInflowData(): Promise<InflowData> {
           }
         );
 
-        const bridgeAmount = intervalBridgeTransfers.reduce(
-          (sum: number, t: any) => sum + Number.parseFloat(t.amount),
-          0
-        );
+        const solBridgeAmount = intervalBridgeTransfers
+          .filter((t: any) => t.fromChain === "Solana")
+          .reduce(
+            (sum: number, t: any) => sum + Number.parseFloat(t.amount),
+            0
+          );
+        const ethBridgeAmount = intervalBridgeTransfers
+          .filter((t: any) => t.fromChain === "Ethereum")
+          .reduce(
+            (sum: number, t: any) => sum + Number.parseFloat(t.amount),
+            0
+          );
         const exchangeAmount =
           (exchangeData.binance + exchangeData.coinbase + exchangeData.kraken) /
           intervals;
-
-        const bridgeUsdValue = bridgeAmount * avaxPrice;
-        const exchangeUsdValue = exchangeAmount * avaxPrice;
+        const totalInflow = exchangeAmount + solBridgeAmount + ethBridgeAmount;
 
         dataPoints.push({
           time: intervalTime.toISOString(),
           exchangeAmount,
-          bridgeAmount,
-          exchangeUsdValue,
-          bridgeUsdValue,
+          totalInflow,
+          solBridgeAmount,
+          ethBridgeAmount,
         });
       }
 
@@ -131,12 +137,16 @@ function generateMockData(): InflowData {
     return Array.from({ length: count }, (_, i) => {
       const time = new Date(now);
       time.setMinutes(i * 15);
+      const exchangeAmount = Math.floor(Math.random() * 1000);
+      const solBridgeAmount = Math.floor(Math.random() * 200);
+      const ethBridgeAmount = Math.floor(Math.random() * 300);
+      const totalInflow = exchangeAmount + solBridgeAmount + ethBridgeAmount;
       return {
         time: time.toISOString(),
-        exchangeAmount: Math.floor(Math.random() * 1000),
-        bridgeAmount: Math.floor(Math.random() * 500),
-        exchangeUsdValue: Math.floor(Math.random() * 10000),
-        bridgeUsdValue: Math.floor(Math.random() * 5000),
+        exchangeAmount,
+        totalInflow,
+        solBridgeAmount,
+        ethBridgeAmount,
       };
     });
   };
