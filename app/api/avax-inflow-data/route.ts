@@ -165,7 +165,7 @@ let lastFetchTime = 0
 const CACHE_DURATION = 15 * 60 * 1000 // 15 minutes cache
 
 export async function GET() {
-  console.log("Starting GET request")
+  console.log("Starting the GET request")
   try {
     const currentTime = Date.now()
 
