@@ -17,7 +17,7 @@ interface InflowDataItem {
 }
 
 type InflowData = {
-  [key in "1h" | "6h" | "12h" | "24h"]: InflowDataItem[]
+  [key in "1h" | "6h" | "12h" | "24h" | "1week"]: InflowDataItem[]
 } & {
   avaxPrice: number
 }
