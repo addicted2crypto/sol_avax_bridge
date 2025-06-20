@@ -102,6 +102,7 @@ export default function AvaxInflowTracker() {
       "6h": generateDataPoints(24),
       "12h": generateDataPoints(48),
       "24h": generateDataPoints(96),
+      "1week": generateDataPoints(672), 
       avaxPrice: 20 + Math.random() * 10,
     }
   }

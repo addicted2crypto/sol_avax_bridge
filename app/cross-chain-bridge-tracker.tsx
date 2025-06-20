@@ -17,13 +17,13 @@ interface BridgeDataItem {
 
 type BridgeData = {
   [key in "sol-avax" | "eth-avax"]: {
-    [key in "1h" | "6h" | "12h" | "24h"]: BridgeDataItem[]
+    [key in "1h" | "6h" | "12h" | "24h" | "1 Week"]: BridgeDataItem[]
   }
 }
 
 export default function CrossChainBridgeTracker() {
   const [bridgeType, setBridgeType] = useState<"sol-avax" | "eth-avax">("sol-avax")
-  const [interval, setInterval] = useState<"1h" | "6h" | "12h" | "24h">("1h")
+  const [interval, setInterval] = useState<"1h" | "6h" | "12h" | "24h" | "1 Week">("1h")
   const [data, setData] = useState<BridgeDataItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -99,6 +99,9 @@ export default function CrossChainBridgeTracker() {
             </Button>
             <Button onClick={() => setInterval("24h")} variant={interval === "24h" ? "default" : "outline"}>
               24 Hours
+            </Button>
+            <Button onClick={() => setInterval("1 Week")}  variant={interval === "1 Week" ? "default" : "outline"}>
+              1 Week  
             </Button>
           </div>
         </div>
